@@ -50,7 +50,9 @@ def _select_frames(nb_images: int, samples_per_video: int) -> List[int]:
 @click.option("--source_dir_root", required=True, type=click.Path(exists=True))
 @click.option("--output_file", required=True, type=click.Path())
 @click.option("--compressions", "-c", multiple=True, default=[Compression.c40])
-@click.option("--data_types", "-d", multiple=True, default=[DataType.face_images])
+@click.option(
+    "--data_types", "-d", multiple=True, default=[DataType.face_images_tracked]
+)
 @click.option(
     "--samples_per_video",
     "-s",
@@ -59,24 +61,28 @@ def _select_frames(nb_images: int, samples_per_video: int) -> List[int]:
     "number, only these are selected. If samples_per_video is -1 all frames for each"
     "video is selected.",
 )
+@click.option(
+    "--methods", "-m", multiple=True, default=FaceForensicsDataStructure.ALL_METHODS
+)
 def create_file_list(
-    source_dir_root, output_file, compressions, data_types, samples_per_video
+    source_dir_root, output_file, methods, compressions, data_types, samples_per_video
 ):
-    file_list = FileList(
-        root=source_dir_root, classes=FaceForensicsDataStructure.METHODS
-    )
+    file_list = FileList(root=source_dir_root, classes=methods)
 
     # use faceforensicsdatastructure to iterate elegantly over the correct
     # image folders
     source_dir_data_structure = FaceForensicsDataStructure(
-        source_dir_root, compressions=compressions, data_types=data_types
+        source_dir_root,
+        methods=methods,
+        compressions=compressions,
+        data_types=data_types,
     )
 
     min_sequence_length = _get_min_sequence_length(source_dir_data_structure)
 
     if min_sequence_length < samples_per_video:
         cl_logger.warning(
-            f"There is a sequence that is sequence that has less frames "
+            f"There is a sequence that has less frames "
             f"then you would like to sample: "
             f"{min_sequence_length}<{samples_per_video}"
         )
