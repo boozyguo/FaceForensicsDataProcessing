@@ -71,7 +71,9 @@ NEURAL_TEXTURES = Method("NeuralTextures", is_real=False)
 class FaceForensicsDataStructure:
 
     METHODS = {
+        ACTORS.name: ACTORS,
         YOUTUBE.name: YOUTUBE,
+        DEEP_FAKE_DETECTION.name: DEEP_FAKE_DETECTION,
         DEEPFAKES.name: DEEPFAKES,
         FACE2FACE.name: FACE2FACE,
         FACE_SWAP.name: FACE_SWAP,
