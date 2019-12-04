@@ -21,6 +21,8 @@ def extract_face_locations_from_video(video_path: Path, target_sub_dir: Path):
     if output_path.exists():
         return
 
+    print(output_path)
+
     # Get video capture
     video_capture = cv2.VideoCapture(str(video_path))
 
@@ -69,7 +71,7 @@ def extract_face_locations_from_videos(
     # this will be used to iterate the same way as the source dir
     # -> create same data structure again
     target_dir_data_structure = FaceForensicsDataStructure(
-        source_dir_root,
+        target_dir_root,
         methods=methods,
         compressions=compressions,
         data_types=(DataType.face_information,),
