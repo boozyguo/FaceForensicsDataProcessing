@@ -80,16 +80,25 @@ class FaceForensicsDataStructure:
         FACE2FACE.name: FACE2FACE,
         FACE_SWAP.name: FACE_SWAP,
         NEURAL_TEXTURES.name: NEURAL_TEXTURES,
-        ACTORS.name: ACTORS,
-        DEEP_FAKE_DETECTION.name: DEEP_FAKE_DETECTION,
     }
     ALL_METHODS = list(METHODS.keys())
-    ALL_MANIPULATED_METHODS = [
-        DEEPFAKES.name,
-        FACE2FACE.name,
-        FACE_SWAP.name,
-        NEURAL_TEXTURES.name,
-    ]
+
+    METHODS_WITHOUT_GOOGLE_DICT = {
+        YOUTUBE.name: YOUTUBE,
+        DEEPFAKES.name: DEEPFAKES,
+        FACE2FACE.name: FACE2FACE,
+        FACE_SWAP.name: FACE_SWAP,
+        NEURAL_TEXTURES.name: NEURAL_TEXTURES,
+    }
+    METHODS_WITHOUT_GOOGLE = list(METHODS_WITHOUT_GOOGLE_DICT.keys())
+
+    METHODS_MANIPULATED_DICT = {
+        DEEPFAKES.name: DEEPFAKES,
+        FACE2FACE.name: FACE2FACE,
+        FACE_SWAP.name: FACE_SWAP,
+        NEURAL_TEXTURES.name: NEURAL_TEXTURES,
+    }
+    METHODS_MANIPULATED = list(METHODS_MANIPULATED_DICT.keys())
 
     def __init__(
         self,

@@ -51,7 +51,7 @@ def extract_bounding_boxes_from_video(video_path: Path, target_sub_dir: Path):
     "--methods",
     "-m",
     multiple=True,
-    default=FaceForensicsDataStructure.ALL_MANIPULATED_METHODS,
+    default=FaceForensicsDataStructure.METHODS_MANIPULATED,
 )
 @click.option("--cpu_count", required=False, type=click.INT, default=mp.cpu_count())
 def extract_bounding_box_from_masks(source_dir_root, methods, cpu_count):

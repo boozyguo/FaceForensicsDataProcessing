@@ -38,6 +38,7 @@ def extract_face_locations_from_video(video_path: Path, target_sub_dir: Path):
             video_capture.release()
             break
 
+        # TODO: use batch_face_locations
         face_locations = face_recognition.face_locations(frame)
 
         bounding_boxes[f"{frame_count:04d}"] = face_locations
@@ -51,7 +52,10 @@ def extract_face_locations_from_video(video_path: Path, target_sub_dir: Path):
 @click.option("--target_dir_root", required=True, type=click.Path(exists=True))
 @click.option("--compressions", "-c", multiple=True, default=[Compression.c40])
 @click.option(
-    "--methods", "-m", multiple=True, default=FaceForensicsDataStructure.ALL_METHODS
+    "--methods",
+    "-m",
+    multiple=True,
+    default=FaceForensicsDataStructure.METHODS_WITHOUT_GOOGLE,
 )
 @click.option("--cpu_count", required=False, type=click.INT, default=mp.cpu_count())
 def extract_face_locations_from_videos(
