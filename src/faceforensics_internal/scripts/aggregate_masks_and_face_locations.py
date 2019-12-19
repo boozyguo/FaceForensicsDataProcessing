@@ -272,7 +272,10 @@ def _filter_face_information(face_information: Path, masks: Union[Path, None], o
 @click.command()
 @click.option("--source_dir_root", required=True, type=click.Path(exists=True))
 @click.option(
-    "--methods", "-m", multiple=True, default=FaceForensicsDataStructure.ALL_METHODS
+    "--methods",
+    "-m",
+    multiple=True,
+    default=FaceForensicsDataStructure.METHODS_WITHOUT_GOOGLE,
 )
 @click.option("--compression", "-c", default=Compression.c40)
 @click.option("--cpu_count", required=False, type=click.INT, default=mp.cpu_count())
