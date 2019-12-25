@@ -106,11 +106,21 @@ def _get_image_size(video_folder: Path):
 def _extract_faces_tracked_from_video(
     video_folder: Path, bounding_boxes: Path, face_images: Path
 ) -> bool:
-    with open(str((bounding_boxes / video_folder.name).with_suffix(".json")), "r") as f:
-        face_bb = json.load(f)
+
+    try:
+        with open(
+            str((bounding_boxes / video_folder.name).with_suffix(".json")), "r"
+        ) as f:
+            face_bb = json.load(f)
+    except FileNotFoundError:
+        logger.warning(f"FileNotFoundError: {str(bounding_boxes / video_folder)}")
+        return False
 
     face_images = face_images / video_folder.with_suffix("").name
-    face_images.mkdir(exist_ok=True)
+    if face_images.exists():
+        return True
+    else:
+        face_images.mkdir()
 
     cap = VideoCapture(str(video_folder))
     width = cap.get(cv2.CAP_PROP_FRAME_WIDTH)
@@ -126,7 +136,10 @@ def _extract_faces_tracked_from_video(
         if not success:
             break
 
-        face = tracked_bb[f"{frame_num:04d}"]
+        try:
+            face = tracked_bb[f"{frame_num:04d}"]
+        except KeyError:
+            break
         _extract_face(image, face, face_images, frame_num)
 
         frame_num += 1
