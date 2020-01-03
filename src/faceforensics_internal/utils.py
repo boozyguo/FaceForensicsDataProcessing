@@ -30,6 +30,7 @@ class Compression(StrEnum):
     c23 = auto()
     c40 = auto()
     random_compressed = auto()
+    random_resolution = auto()
     masks = auto()
 
 
