@@ -1,4 +1,5 @@
 import random
+import subprocess
 from pathlib import Path
 
 import click
@@ -25,8 +26,7 @@ def create_random_resolution_video(video_path: Path, output_path: Path):
         f"-vf scale={new_size[0]}:{new_size[1]} "
         f"{output_path}"
     )
-    tqdm.write(ffmpeg_command)
-    # subprocess.check_output(ffmpeg_command, shell=True, stderr=subprocess.STDOUT)
+    subprocess.check_output(ffmpeg_command, shell=True, stderr=subprocess.STDOUT)
 
 
 @click.command()
@@ -62,7 +62,7 @@ def create_random_resolution_videos(source_dir_root, target_dir_root, methods):
         method = source_sub_dir.parts[-3]
         print(f"Processing {compression}, {method}")
 
-        for video_path in tqdm(sorted(source_sub_dir.iterdir())[:2]):
+        for video_path in tqdm(sorted(source_sub_dir.iterdir())):
 
             output_path = target_sub_dir / video_path.name
             if output_path.exists():
